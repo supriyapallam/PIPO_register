@@ -1,0 +1,35 @@
+//Design Code
+module pipo_reg(output reg q1,q2,q3,q4, input d1,d2,d3,d4, input clk);
+  always@(posedge clk)
+    begin
+      q1 <= d1;
+      q2 <= d2;
+      q3 <= d3;
+      q4 <= d4;
+    end
+endmodule
+
+//Test Bench Code
+module tb();
+  reg d1,d2,d3,d4;
+  reg clk;
+  wire q1,q2,q3,q4;
+  pipo_reg DUT(q1,q2,q3,q4,d1,d2,d3,d4,clk);
+  initial
+    begin
+      clk=1'b0;
+      forever #5 clk=~clk;
+    end
+  initial
+    begin
+      @(negedge clk) d1=1'b1;d2=1'b0;d3=1'b1;d4=1'b0;
+      @(negedge clk);
+      $finish;
+    end
+  initial
+    begin
+      $dumpfile("test.vcd");
+      $dumpvars(1);
+    end
+endmodule
+
